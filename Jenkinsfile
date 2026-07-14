@@ -3,7 +3,13 @@ pipeline {
 
     stages {
 
-        stage('Check Docker Version') {
+        stage('Approval') {
+            steps {
+                input message: 'Do you want to continue with the deployment?', ok: 'Submit'
+            }
+        }
+
+        stage('Docker Version Check') {
             steps {
                 echo 'Checking Docker version...'
                 sh 'docker --version'
@@ -12,7 +18,7 @@ pipeline {
 
         stage('Docker Compose Up') {
             steps {
-                echo 'Starting application using Docker Compose...'
+                echo 'Starting Docker Compose...'
                 sh 'docker compose up -d'
             }
         }
@@ -21,15 +27,15 @@ pipeline {
 
     post {
         success {
-            echo 'Pipeline executed successfully.'
+            echo 'Pipeline completed successfully.'
         }
 
         failure {
-            echo 'Pipeline execution failed.'
+            echo 'Pipeline failed.'
         }
 
         always {
-            echo 'Pipeline finished.'
+            echo 'Pipeline execution finished.'
         }
     }
 }
