@@ -3,12 +3,6 @@ pipeline {
 
     stages {
 
-        stage('Approval') {
-            steps {
-                input message: 'Do you want to continue with the deployment?', ok: 'Submit'
-            }
-        }
-
         stage('Docker Version Check') {
             steps {
                 echo 'Checking Docker version...'
